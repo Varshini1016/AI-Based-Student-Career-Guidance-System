@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Based Student Career Guidance System</title>
+    <meta name="description" content="AI-Based Student Career Guidance System that predicts suitable career paths using academic performance, skills, and interests.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="background-animation">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>AI Career <span class="highlight">Pathfinder</span></h1>
+            <p>Discover your true potential through the power of Machine Learning</p>
+        </header>
+
+        <main>
+            <section class="glass-card form-section">
+                <h2>Your Profile</h2>
+                <form id="prediction-form">
+                    <div class="form-group">
+                        <label for="cgpa">CGPA (Out of 10)</label>
+                        <input type="number" id="cgpa" name="cgpa" step="0.1" min="0" max="10" required placeholder="e.g., 8.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="python">Python Skill (1-10)</label>
+                        <input type="number" id="python" name="python" min="1" max="10" required placeholder="e.g., 8">
+                    </div>
+                    <div class="form-group">
+                        <label for="java">Java Skill (1-10)</label>
+                        <input type="number" id="java" name="java" min="1" max="10" required placeholder="e.g., 7">
+                    </div>
+                    <div class="form-group">
+                        <label for="aptitude">Aptitude Score (1-100)</label>
+                        <input type="number" id="aptitude" name="aptitude" min="1" max="100" required placeholder="e.g., 85">
+                    </div>
+                    <div class="form-group">
+                        <label for="communication">Communication Skill (1-10)</label>
+                        <input type="number" id="communication" name="communication" min="1" max="10" required placeholder="e.g., 8">
+                    </div>
+                    <div class="form-group">
+                        <label for="interest">Preferred Domain</label>
+                        <select id="interest" name="interest" required>
+                            <option value="AI">Artificial Intelligence</option>
+                            <option value="Development">Software Development</option>
+                            <option value="Security">Cybersecurity</option>
+                            <option value="Data">Data Science</option>
+                            <option value="Cloud">Cloud Computing</option>
+                            <option value="Business">Business & Management</option>
+                            <option value="Networking">Networking</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="student_skills">Your Technical Skills (Comma separated)</label>
+                        <input type="text" id="student_skills" name="student_skills" placeholder="e.g., Python, SQL, Machine Learning">
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Predict Career Path <span class="arrow">→</span></button>
+                </form>
+            </section>
+
+            <div class="results-container hidden" id="results-container">
+                <section class="glass-card result-section">
+                    <div class="result-header">
+                        <h2>Recommended Career</h2>
+                        <div class="career-title" id="res-career">Data Scientist</div>
+                        <div class="confidence-bar-container">
+                            <span class="confidence-text" id="res-confidence-text">89% Match</span>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" id="res-confidence-fill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <h3>Placement Probability</h3>
+                            <div class="circular-progress" id="res-probability">
+                                <span class="progress-value">82%</span>
+                            </div>
+                        </div>
+                        <div class="stat-box align-left">
+                            <h3>Skill Gap Analysis</h3>
+                            <p class="subtitle">Required Skills vs Your Skills</p>
+                            <ul class="skills-list" id="res-skill-gaps">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="recommendations">
+                        <h3>Learning Path</h3>
+                        <ul class="learning-list" id="res-learning">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+
+                    <div class="insights-section mt-4">
+                        <h3>AI Decision Insights (Feature Importance)</h3>
+                        <p class="subtitle">See which factors influenced the AI's career prediction the most.</p>
+                        <div class="chart-container" style="position: relative; height:300px; width:100%">
+                            <canvas id="featureChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        <div class="extra-features">
+            <section class="glass-card mini-card">
+                <h3>Resume Analyzer</h3>
+                <p>Upload a PDF or TXT file to auto-extract your skills.</p>
+                <form id="resume-form" enctype="multipart/form-data">
+                    <input type="file" id="resume" name="resume" accept=".txt,.pdf">
+                    <button type="submit" class="btn-secondary">Analyze</button>
+                </form>
+                <div id="resume-result" class="hidden"></div>
+            </section>
+        </div>
+
+        <!-- Chatbot UI -->
+        <div class="chatbot-widget">
+            <div class="chatbot-header" id="chatbot-toggle">
+                <span>💬 Career Assistant</span>
+            </div>
+            <div class="chatbot-body hidden" id="chatbot-body">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot">Hi! Ask me what skills are needed for a specific career!</div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button id="send-chat">Send</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

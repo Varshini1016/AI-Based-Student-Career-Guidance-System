@@ -1,0 +1,44 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Hey"],
+      "responses": ["Hello! I am your AI Career Guide. How can I help you today?", "Hi there! Looking for career advice?", "Greetings! How can I assist your career journey?"]
+    },
+    {
+      "tag": "data_science",
+      "patterns": ["What skills do I need for data science?", "How to become a data scientist", "Data science requirements", "Tell me about data science", "What does a data scientist do?"],
+      "responses": ["To become a Data Scientist, you should focus on Python, Machine Learning, Statistics, and SQL. Coursera and Kaggle are great places to start!", "Data Scientists extract insights from data. Key skills include Python, ML, Math, and Data Analysis."]
+    },
+    {
+      "tag": "software_dev",
+      "patterns": ["How to become a software developer?", "Skills for software development", "Software engineer path", "Programming skills needed"],
+      "responses": ["Software Developers need strong programming fundamentals. Focus on Java, Python, Data Structures, Algorithms, and version control like Git.", "To be a Software Developer, practice coding on platforms like LeetCode and master a language like Java or Python."]
+    },
+    {
+      "tag": "cybersecurity",
+      "patterns": ["How to get into cybersecurity?", "Security analyst skills", "What is ethical hacking?", "Cybersecurity path"],
+      "responses": ["Cybersecurity requires knowledge of Networking, Linux, Ethical Hacking, and Security Protocols. Certifications like CompTIA Security+ are highly recommended.", "For a career in Security, start by understanding networks, learning Linux, and exploring platforms like TryHackMe."]
+    },
+    {
+      "tag": "ai_ml",
+      "patterns": ["How to become an AI engineer?", "Machine learning career path", "AI/ML skills", "What is artificial intelligence?"],
+      "responses": ["AI/ML Engineers need to be proficient in Python, Deep Learning, TensorFlow/PyTorch, and advanced Mathematics.", "The AI field requires a strong foundation in Algorithms, Math, and Neural Networks. DeepLearning.AI is a great resource."]
+    },
+    {
+      "tag": "web_dev",
+      "patterns": ["What is web development?", "Frontend skills", "Backend skills", "How to become a web developer?"],
+      "responses": ["Web Developers build websites. You'll need HTML, CSS, JavaScript, and frameworks like React or Node.js. Check out FreeCodeCamp or The Odin Project.", "For Web Development, start with HTML/CSS/JS, then move on to a frontend framework (like React) and backend technologies."]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "See you later", "Goodbye", "Thanks, bye"],
+      "responses": ["Goodbye! Best of luck with your career!", "See you later! Keep learning!", "Bye! Let me know if you need more advice later."]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks"],
+      "responses": ["You're welcome!", "Happy to help!", "Anytime!"]
+    }
+  ]
+}
