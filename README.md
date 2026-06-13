@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AI-Based Student Career Guidance System ⭐⭐⭐⭐⭐
 
 An intelligent, full-stack Machine Learning web application designed to help final-year students identify suitable career paths based on academic performance, technical skills, interests, and aptitude scores. 
@@ -80,3 +81,6 @@ Navigate to `http://127.0.0.1:5000` in your web browser.
 
 ---
 *Developed as a Final Year AI & DS Project.*
+=======
+# AI-Based-Student-Career-Guidance-System
+>>>>>>> 45bfa442d818f38a905e5b40697f8f3cffc231d0
