@@ -69,13 +69,14 @@
             <div class="results-container hidden" id="results-container">
                 <section class="glass-card result-section">
                     <div class="result-header">
-                        <h2>Recommended Career</h2>
-                        <div class="career-title" id="res-career">Data Scientist</div>
-                        <div class="confidence-bar-container">
-                            <span class="confidence-text" id="res-confidence-text">89% Match</span>
-                            <div class="confidence-bar">
-                                <div class="confidence-fill" id="res-confidence-fill" style="width: 0%;"></div>
-                            </div>
+                        <div class="badge-container" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 1rem;">
+                            <span class="badge" id="badge-algo">Random Forest</span>
+                            <span class="badge" id="badge-acc">88.5% Accuracy</span>
+                            <span class="badge" id="badge-rec">500 Records</span>
+                        </div>
+                        <h2>Top Career Predictions</h2>
+                        <div class="top-predictions" id="res-top-3">
+                            <!-- Populated by JS -->
                         </div>
                     </div>
                     
@@ -95,9 +96,10 @@
                         </div>
                     </div>
 
-                    <div class="recommendations">
-                        <h3>Learning Path</h3>
-                        <ul class="learning-list" id="res-learning">
+                    <div class="recommendations mt-4">
+                        <h3>Career Roadmap</h3>
+                        <p class="subtitle">Your 5-Step path to success</p>
+                        <ul class="learning-list timeline" id="res-learning">
                             <!-- Populated by JS -->
                         </ul>
                     </div>
@@ -113,15 +115,51 @@
             </div>
         </main>
         
-        <div class="extra-features">
+        <div class="extra-features mt-4">
             <section class="glass-card mini-card">
-                <h3>Resume Analyzer</h3>
-                <p>Upload a PDF or TXT file to auto-extract your skills.</p>
-                <form id="resume-form" enctype="multipart/form-data">
-                    <input type="file" id="resume" name="resume" accept=".txt,.pdf">
-                    <button type="submit" class="btn-secondary">Analyze</button>
+                <h3>Resume Analyzer (ATS Checker)</h3>
+                <p>Upload a PDF/TXT to see your ATS Score and Missing Skills.</p>
+                <form id="resume-form" enctype="multipart/form-data" style="flex-direction: column; gap: 1rem;">
+                    <div class="form-group" style="width: 100%;">
+                        <label for="target_career">Target Career Role</label>
+                        <select id="target_career" name="target_career" required>
+                            <option value="Data Scientist">Data Scientist</option>
+                            <option value="Software Developer">Software Developer</option>
+                            <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+                            <option value="AI/ML Engineer">AI/ML Engineer</option>
+                            <option value="Web Developer">Web Developer</option>
+                            <option value="Cloud Engineer">Cloud Engineer</option>
+                            <option value="Business Analyst">Business Analyst</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center; justify-content: center;">
+                        <input type="file" id="resume" name="resume" accept=".txt,.pdf">
+                        <button type="submit" class="btn-secondary">Check ATS Score</button>
+                    </div>
                 </form>
-                <div id="resume-result" class="hidden"></div>
+                
+                <div id="resume-result" class="hidden mt-4" style="text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <div class="circular-progress small-circle" id="ats-circle">
+                            <span class="progress-value" id="ats-score-text" style="font-size: 1.2rem;">0%</span>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--accent-color);">ATS Compatibility Score</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">Based on required keywords</p>
+                        </div>
+                    </div>
+                    
+                    <div class="skills-analysis">
+                        <div style="margin-bottom: 1rem;">
+                            <h4 style="color: var(--success-color); margin-bottom: 0.5rem;">✓ Skills Found</h4>
+                            <div id="ats-found-skills" style="font-size: 0.9rem; color: var(--text-secondary);"></div>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--danger-color); margin-bottom: 0.5rem;">✗ Missing Skills</h4>
+                            <ul class="skills-list" id="ats-missing-skills"></ul>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
 

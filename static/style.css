@@ -301,6 +301,11 @@ button {
     transition: background 1s ease;
 }
 
+.circular-progress.small-circle {
+    width: 70px;
+    height: 70px;
+}
+
 .circular-progress::before {
     content: "";
     position: absolute;
@@ -310,11 +315,27 @@ button {
     background-color: var(--glass-bg);
 }
 
+.circular-progress.small-circle::before {
+    width: 55px;
+    height: 55px;
+}
+
 .progress-value {
     position: relative;
     font-size: 2rem;
     font-weight: 800;
     color: white;
+}
+
+/* Badges */
+.badge {
+    background: rgba(59, 130, 246, 0.2);
+    color: #93c5fd;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 /* Skills List */
@@ -346,7 +367,7 @@ button {
 }
 
 .recommendations h3 {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     color: var(--accent-color);
 }
 
@@ -367,6 +388,27 @@ button {
     left: 0;
     color: var(--accent-color);
 }
+
+/* Timeline */
+.timeline {
+    border-left: 2px solid rgba(59, 130, 246, 0.3);
+    padding-left: 1rem !important;
+    margin-left: 0.5rem;
+}
+
+.timeline li::before {
+    content: "";
+    position: absolute;
+    left: -1.3rem;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+.mt-4 { margin-top: 1.5rem; }
 
 /* Extra Features */
 .extra-features {

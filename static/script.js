@@ -97,14 +97,34 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsContainer.classList.remove('hidden');
         resultsContainer.classList.add('fade-in');
         
-        // Update Career
-        document.getElementById('res-career').innerText = data.career;
-        
-        // Update Confidence Bar
-        document.getElementById('res-confidence-text').innerText = `${data.confidence}% Match`;
-        setTimeout(() => {
-            document.getElementById('res-confidence-fill').style.width = `${data.confidence}%`;
-        }, 300);
+        // Update Top 3 Careers
+        const top3Container = document.getElementById('res-top-3');
+        top3Container.innerHTML = '';
+        data.top_3.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.style.marginBottom = "1rem";
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem;">
+                    <strong style="font-size: ${index === 0 ? '1.5rem' : '1.1rem'}; color: ${index === 0 ? 'var(--accent-color)' : 'var(--text-primary)'};">
+                        ${index + 1}. ${item.career}
+                    </strong>
+                    <span style="font-weight: bold; color: var(--success-color);">${item.confidence}%</span>
+                </div>
+                <div class="confidence-bar-container" style="height: ${index === 0 ? '20px' : '8px'}; margin-top: 0;">
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: ${item.confidence}%;"></div>
+                    </div>
+                </div>
+            `;
+            top3Container.appendChild(div);
+        });
+
+        // Update ML Badges
+        if (data.model_details) {
+            document.getElementById('badge-algo').innerText = data.model_details.algorithm;
+            document.getElementById('badge-acc').innerText = data.model_details.accuracy + " Accuracy";
+            document.getElementById('badge-rec').innerText = data.model_details.records + " Records";
+        }
 
         // Update Placement Probability (Circular Progress)
         document.getElementById('res-probability').style.background = `conic-gradient(var(--accent-color) ${data.placement_probability * 3.6}deg, rgba(255,255,255,0.1) 0deg)`;
@@ -124,10 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
             skillList.appendChild(li);
         });
 
-        // Update Learning Recommendations
+        // Update Roadmap
         const learningList = document.getElementById('res-learning');
         learningList.innerHTML = '';
-        data.recommendations.forEach(rec => {
+        data.roadmap.forEach(rec => {
             const li = document.createElement('li');
             li.innerText = rec;
             learningList.appendChild(li);
@@ -148,8 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = resumeForm.querySelector('button');
         btn.innerText = 'Analyzing...';
         
-        const formData = new FormData();
-        formData.append('resume', fileInput.files[0]);
+        const formData = new FormData(resumeForm);
 
         try {
             const response = await fetch('/analyze_resume', {
@@ -162,14 +181,31 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (result.status === 'success') {
                 resultDiv.classList.remove('hidden');
-                resultDiv.innerHTML = `<strong>Skills Extracted:</strong> ${result.skills_found.length > 0 ? result.skills_found.join(', ') : 'None identified.'}`;
+                
+                // Set ATS Score Circle
+                const atsCircle = document.getElementById('ats-circle');
+                atsCircle.style.background = `conic-gradient(var(--accent-color) ${result.ats_score * 3.6}deg, rgba(255,255,255,0.1) 0deg)`;
+                document.getElementById('ats-score-text').innerText = `${result.ats_score}%`;
+                
+                // Set Skills
+                document.getElementById('ats-found-skills').innerText = result.skills_found.length > 0 ? result.skills_found.join(', ') : 'None identified.';
+                
+                const missingList = document.getElementById('ats-missing-skills');
+                missingList.innerHTML = '';
+                if (result.missing_skills.length === 0) {
+                    missingList.innerHTML = '<li style="color: var(--success-color);">You have all required skills!</li>';
+                } else {
+                    result.missing_skills.forEach(skill => {
+                        missingList.innerHTML += `<li class="skill-gap"><span class="icon">✗</span> ${skill}</li>`;
+                    });
+                }
             } else {
                 alert('Error: ' + result.message);
             }
         } catch (error) {
             console.error(error);
         } finally {
-            btn.innerText = 'Analyze';
+            btn.innerText = 'Check ATS Score';
         }
     });
 

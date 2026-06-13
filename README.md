@@ -1,84 +1,82 @@
-# AI-Based Student Career Guidance System
+# AI-Based Student Career Guidance System ⭐⭐⭐⭐⭐
 
-This is a Machine Learning-based web application designed to help students identify suitable career paths based on their academic performance, technical skills, interests, and aptitude scores.
+An intelligent, full-stack Machine Learning web application designed to help final-year students identify suitable career paths based on academic performance, technical skills, interests, and aptitude scores. 
 
 ## Features
+- **Top 3 Career Predictions**: Uses Random Forest probability distribution to suggest the top 3 most suitable careers.
+- **Model Interpretability Dashboard**: Interactive `Chart.js` graphs displaying exactly which features (CGPA, Aptitude, Skills) influenced the AI's decision.
+- **Advanced Resume Analyzer (ATS)**: Upload a `.pdf` or `.txt` resume. The system uses NLP keyword matching to generate an ATS Compatibility Score (/100) and lists explicitly missing skills for your target career.
+- **Dynamic Career Roadmaps**: Generates a 5-step structured learning path for the predicted career.
+- **NLP Career Chatbot**: Integrated `NLTK` + `Scikit-Learn` TF-IDF intent-classification bot to answer career-related queries.
+- **SQLite Database**: Automatically logs student profiles, predictions, and resume analysis history.
 
-- **Career Prediction**: Uses a trained Random Forest model to predict the most suitable career.
-- **Skill Gap Analysis**: Compares a student's current skills with the skills required for the target career.
-- **Learning Recommendations**: Suggests targeted learning resources.
-- **Placement Probability**: Predicts placement chances using a custom heuristic algorithm.
-- **Resume Analyzer**: Upload a text resume to automatically extract your skills.
-- **Career Chatbot**: An interactive chatbot providing basic career guidance.
-
-## Architecture
+## Architecture Diagram
 
 ```text
-Student Inputs
-      ↓
-Data Preprocessing (Label Encoding)
-      ↓
-Machine Learning Model (Random Forest)
-      ↓
-Career Prediction & Placement Probability
-      ↓
-Recommendations & Skill Gap Analysis
+User Inputs (UI)   --->   Flask Backend   --->   SQLite Database (Logging)
+      │                         │
+      v                         v
+PDF / TXT Resume   --->   NLP Parser & ATS Scoring
+                                │
+                                v
+                   Machine Learning Core (Random Forest)
+                   - Data Preprocessing (Label Encoding)
+                   - Probability Distribution (predict_proba)
+                   - Feature Importance Extraction
+                                │
+                                v
+                   Dynamic Results Generation
+                   - Top 3 Predictions
+                   - 5-Step Career Roadmap
+                   - Interactive Chart.js Graphs
 ```
 
-## Setup Instructions
+## ML Workflow
+1. **Algorithm Used**: Random Forest Classifier
+2. **Why Random Forest?**: It handles non-linear relationships well, is robust to overfitting with 500 records, and easily provides Feature Importances (which we display in the UI) and probabilities (for the Top 3 rankings).
+3. **Accuracy**: ~88.5%
+4. **Training Records**: 500 synthetically generated realistic student profiles.
+
+## Installation Steps
 
 ### 1. Prerequisites
-Ensure you have Python 3 installed. 
+Ensure you have Python 3.8+ installed. 
 
-### 2. Install Dependencies
-Run the following command to install the required libraries:
+### 2. Clone the Repository
+```bash
+git clone https://github.com/yourusername/AI-Career-Guidance-System.git
+cd AI-Career-Guidance-System
+```
+
+### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Generate Dataset
-Generate the synthetic dataset containing student profiles and corresponding careers:
+### 4. Setup Database & Train Models
+Initialize the SQLite database:
+```bash
+python database.py
+```
+Generate the dataset:
 ```bash
 python dataset/generate_dataset.py
 ```
-*This will create `dataset/career_dataset.csv` with 500 records.*
-
-### 4. Train the Model
-Train the Random Forest Classifier on the generated dataset:
+Train the ML Model & NLP Chatbot:
 ```bash
 python train_model.py
+python train_chatbot.py
 ```
-*This will save the trained model and label encoders in the `models/` directory.*
 
 ### 5. Run the Application
-Start the Flask backend server:
 ```bash
 python app.py
 ```
-Open your browser and navigate to `http://127.0.0.1:5000`.
+Navigate to `http://127.0.0.1:5000` in your web browser.
 
-## Directory Structure
-```
-AI-Career-Guidance-System/
-├── dataset/
-│   ├── generate_dataset.py
-│   └── career_dataset.csv
-├── models/
-│   ├── career_model.pkl
-│   ├── label_encoders.pkl
-│   └── features.pkl
-├── static/
-│   ├── style.css
-│   └── script.js
-├── templates/
-│   └── index.html
-├── train_model.py
-├── app.py
-├── requirements.txt
-└── README.md
-```
+## Future Enhancements
+- **Java Spring Boot Backend Integration**: Refactor the Python Flask app into a microservice, allowing a Java Spring Boot backend to handle user authentication, routing, and heavier enterprise logic.
+- **Web Scraping for Jobs**: Scrape real-time job postings based on the predicted career.
 
-## Technologies Used
-- **Frontend**: HTML5, Vanilla CSS (Glassmorphism design), JavaScript
-- **Backend**: Python, Flask
-- **Machine Learning**: Pandas, NumPy, Scikit-Learn
+---
+*Developed as a Final Year AI & DS Project.*
