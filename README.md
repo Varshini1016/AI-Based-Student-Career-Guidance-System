@@ -80,6 +80,10 @@ Navigate to `http://127.0.0.1:5000` in your web browser.
 - **Web Scraping for Jobs**: Scrape real-time job postings based on the predicted career.
 
 ---
+## 🔗 Live Demo
+
+https://your-streamlit-app-url.streamlit.app
+
 *Developed as a Final Year AI & DS Project.*
 =======
 # AI-Based-Student-Career-Guidance-System
