@@ -8,6 +8,5 @@ env/
 *.log
 .DS_Store
 dataset/*.csv
-models/*.pkl
 !models/.gitkeep
 !dataset/.gitkeep
