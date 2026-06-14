@@ -81,8 +81,7 @@ Navigate to `http://127.0.0.1:5000` in your web browser.
 
 ---
 ## 🔗 Live Demo
-
-https://your-streamlit-app-url.streamlit.app
+https://ai-based-student-career-guidance-system-gu27magissezmmnmb5t5hk.streamlit.app/
 
 *Developed as a Final Year AI & DS Project.*
 =======
